@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>在线考试系统</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">在线考试系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="mg_information.html">个人信息管理</a></li>
+            <li class="layui-nav-item"><a href="table.html">统计报表</a></li>
+
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <shiro:user>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="/img/t01.png" class="layui-nav-img">
+                        <shiro:principal></shiro:principal>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="mg_information.html">基本资料</a></dd>
+                        <dd><a href="table.html">统计报表</a></dd>
+                    </dl>
+                </li>
+            </shiro:user>
+            <shiro:guest>
+                请<lable style="color: white;text-decoration:underline" onclick="javascript:location.href='login.html'">登录</lable>
+            </shiro:guest>
+            <shiro:user> <li class="layui-nav-item"><a href="login.html">退出</a></li></shiro:user>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+
+                <li class="layui-nav-item">
+                    <shiro:hasRole name="admin"><a href="javascript:;">教师管理</a></shiro:hasRole>
+                    <dl class="layui-nav-child">
+                        <shiro:hasPermission name="sys:a:addt"> <dd><a href="add_teacher.html">添加老师</a></dd></shiro:hasPermission>
+                        <shiro:hasPermission name="sys:a:deletet"> <dd><a href="delete_teacher.html">删除老师</a></dd></shiro:hasPermission>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item">
+                    <shiro:hasRole name="admin"><a href="javascript:;">权限管理</a></shiro:hasRole>
+                    <dl class="layui-nav-child">
+                        <shiro:hasPermission name="sys:a:permissions"> <dd><a href="update_permissions.html">权限修改</a></dd></shiro:hasPermission>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item">
+                    <shiro:hasRole name="teacher"><a href="javascript:;">试题管理</a></shiro:hasRole>
+                    <dl class="layui-nav-child">
+                        <shiro:hasPermission name="sys:t:exam"> <dd><a href="make_exam.html">出题</a></dd></shiro:hasPermission>
+                        <shiro:hasPermission name="sys:t:exam"> <dd><a href="read_exam.html">在线评阅</a></dd></shiro:hasPermission>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item">
+                    <shiro:hasRole name="teacher"><a href="javascript:;">学生管理</a></shiro:hasRole>
+                    <dl class="layui-nav-child">
+                        <shiro:hasPermission name="sys:t:adds"> <dd><a href="add_student.html;">添加学生</a></dd></shiro:hasPermission>
+                        <shiro:hasPermission name="sys:t:deletes"> <dd><a href="delete_student.html">删除学生</a></dd></shiro:hasPermission>
+                        <shiro:hasPermission name="sys:t:updates"> <dd><a href="update_student.html">修改学生信息</a></dd></shiro:hasPermission>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item">
+                    <shiro:hasRole name="student"><a href="javascript:;">考试系统</a></shiro:hasRole>
+                    <dl class="layui-nav-child">
+                        <shiro:hasPermission name="sys:s:exam"> <dd><a href="online_exam.html">在线考试</a></dd></shiro:hasPermission>
+                        <shiro:hasPermission name="sys:s:test"> <dd><a href="online_test.html">在线练习</a></dd></shiro:hasPermission>
+                    </dl>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div class="layui-form">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>班级</th>
+                    <th>年龄</th>
+                    <th>性别</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>徐凤年</td>
+                    <td>4</td>
+                    <td>20</td>
+                    <td>男</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © 2017110440 王赛
+    </div>
+</div>
+<script src="/layui/layui.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

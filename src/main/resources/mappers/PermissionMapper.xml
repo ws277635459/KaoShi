@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ws.kaoshi.dao.PermissionsDao">
+
+        <select id="queryPermissionsByUsername" resultSets="java.util.Set" resultType="string">
+    select permissions.permissions_code from user
+    inner join urs on user.user_id=urs.uid
+    inner join roles on urs.rid=roles.role_id
+    inner join rps on roles.role_id=rps.rid
+    inner join permissions on rps.pid=permissions.permissions_id
+    where user.username=#{username}
+        </select>
+</mapper>
+
